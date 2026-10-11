@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday!</title>
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#0d0b12;--card:#1a1426;--purple:#7b3fc4;--purple2:#a66bf0;--silver:#cfcfd8;--peach:#f8b79a;--text:#f3eefa}
+html{scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,"Segoe UI",system-ui,sans-serif;line-height:1.6}
+section{padding:64px 20px;max-width:1000px;margin:0 auto;text-align:center}
+h1,h2{font-family:Georgia,"Times New Roman",serif;margin:0 0 8px}
+h2{font-size:2rem;color:var(--silver)}
+.sub{color:var(--peach);margin-bottom:28px}
+.holo{background:linear-gradient(90deg,#f8b79a,#a66bf0,#cfcfd8,#7bd5f0,#f8b79a);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 6s linear infinite}
+@keyframes sh{to{background-position:300% 0}}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;max-width:none;background:radial-gradient(circle at 50% 30%,#2a1646,var(--bg) 70%)}
+.hero h1{font-size:clamp(2.4rem,9vw,5rem);line-height:1.1}
+.hero p{color:var(--silver);max-width:480px}
+.b{position:absolute;border-radius:50%;opacity:.8;animation:fl 7s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-24px)}}
+.btn{background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border:0;padding:14px 28px;border-radius:999px;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block;margin-top:20px}
+.btn:hover{filter:brightness(1.15)}
+.row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.polaroid{background:#f5f1f8;color:#222;padding:12px 12px 16px;border-radius:6px;width:260px;transform:rotate(-3deg);box-shadow:0 10px 30px #0008}
+.polaroid:nth-child(2){transform:rotate(3deg)}
+.ph{aspect-ratio:4/5;background:linear-gradient(135deg,#d9cfe8,#bfb2d6);display:flex;align-items:center;justify-content:center;color:#6b5a8a;font-size:.9rem;padding:10px}
+.polaroid img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.polaroid p{margin:10px 0 0;font-family:Georgia,serif;font-style:italic}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.gal .t{aspect-ratio:1;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#2a1d40,#1a1426);border:1px dashed #4a3570;display:flex;align-items:center;justify-content:center;color:#8d83a0;font-size:.8rem}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:.2s}
+.gal img:hover{transform:scale(1.05)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid #3a2a55;border-radius:16px;padding:16px}
+.vid{aspect-ratio:9/16;max-height:360px;width:100%;border-radius:10px;background:#000;object-fit:cover;display:flex;align-items:center;justify-content:center;color:var(--silver);font-size:2rem}
+.card h3{margin:10px 0 0;font-size:1rem;color:var(--peach)}
+.cake{font-size:5rem;margin:10px 0}
+#msg{min-height:1.6em;color:var(--peach)}
+.letter{background:var(--card);border:1px solid #3a2a55;border-radius:16px;padding:28px;text-align:left;font-family:Georgia,serif;max-width:620px;margin:0 auto}
+.stats{max-width:560px;margin:0 auto;text-align:left}
+.stat{display:flex;align-items:center;gap:12px;margin:10px 0;font-size:.9rem}
+.stat span:first-child{width:130px;color:var(--silver)}
+.bar{flex:1;height:10px;background:#2a1d40;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--peach));transition:width 1.2s}
+.badge{text-align:center}
+.badge div{font-size:2.4rem}
+.badge h3{margin:6px 0 2px}
+.badge p{margin:0;color:var(--silver);font-size:.85rem}
+.opt{display:block;width:100%;margin:8px 0;padding:12px;border-radius:12px;background:#241a38;border:1px solid #3a2a55;color:var(--text);cursor:pointer;font-size:1rem}
+.opt:hover{border-color:var(--purple2)}
+.opt.ok{background:#2f7a4f}
+.opt.no{background:#8a2f4a}
+.hero .b{cursor:pointer;transition:transform .3s,opacity .3s}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+footer{padding:40px 20px;color:#8d83a0;font-size:.85rem;text-align:center}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:9}
+#lb{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:20;cursor:zoom-out}
+#lb img{max-width:92%;max-height:92%;border-radius:10px}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="lb" onclick="this.style.display='none'"><img id="lbi" alt=""></div>
+
+<section class="hero">
+  <div class="b" style="width:60px;height:60px;background:#7b3fc4;left:10%;top:18%"></div>
+  <div class="b" style="width:46px;height:46px;background:#cfcfd8;right:12%;top:14%;animation-delay:1s"></div>
+  <div class="b" style="width:70px;height:70px;background:#222;border:2px solid #555;left:18%;bottom:14%;animation-delay:2s"></div>
+  <div class="b" style="width:52px;height:52px;background:#a66bf0;right:16%;bottom:20%;animation-delay:3s"></div>
+  <p>🎉 This one is all about you 🎉</p>
+  <h1 class="holo">Happy Birthday,<br><span>[His Name]</span>!</h1>
+  <p>A little corner of the internet celebrating you and the people, moments and quests that make you, you.</p>
+  <p id="pop" style="color:var(--peach);margin-top:14px">🎈 Pop the balloons! 0/4</p>
+  <a class="btn" href="#then" onclick="boom()">Let's go ↓</a>
+</section>
+
+<section id="then">
+  <h2>Look how far you've come</h2>
+  <div class="sub">Then &amp; now</div>
+  <div class="row">
+    <div class="polaroid">
+      <!-- Replace the div with: <img src="childhood.jpg" alt="Little him"> -->
+      <div class="ph">Childhood photo goes here</div>
+      <p>Little [Name] 🥹</p>
+    </div>
+    <div class="polaroid">
+      <!-- Replace with: <img src="now.jpg" alt="Now"> -->
+      <div class="ph">A recent photo goes here</div>
+      <p>Level [Age] unlocked</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Player profile 🎮</h2>
+  <div class="sub">[Name] &middot; Level [Age] &middot; Class: [e.g. Gym Rat / Cat Dad / Adventurer]</div>
+  <div class="card stats" id="stats"></div>
+</section>
+
+<div id="galleries"></div>
+
+<section>
+  <h2>Achievements unlocked 🏆</h2>
+  <div class="sub">Badges earned the hard way</div>
+  <div class="grid" id="ach"></div>
+</section>
+
+<section>
+  <h2>Quick quiz 🧠</h2>
+  <div class="sub">How well do you know... you?</div>
+  <div class="card" id="quiz" style="max-width:520px;margin:0 auto"></div>
+</section>
+
+<section>
+  <h2>Messages from your people</h2>
+  <div class="sub">Press play. Prepare your heart 🥹</div>
+  <div class="grid">
+    <div class="card"><div class="vid">▶</div><h3>From [Friend 1]</h3></div>
+    <div class="card"><div class="vid">▶</div><h3>From [Family]</h3></div>
+    <div class="card"><div class="vid">▶</div><h3>From [Friend 2]</h3></div>
+    <div class="card"><div class="vid">▶</div><h3>From [Coworkers]</h3></div>
+  </div>
+  <!-- For real videos, swap each <div class="vid">▶</div> for:
+       <video class="vid" controls playsinline src="video1.mp4"></video> -->
+</section>
+
+<section>
+  <h2>Make a wish</h2>
+  <div class="cake" id="cake">🎂</div>
+  <button class="btn" onclick="wish()">Blow out the candles</button>
+  <p id="msg"></p>
+  <button class="btn" style="margin-top:8px" onclick="gift()">🎁 Open your gift</button>
+  <div class="card" id="giftbox" style="display:none;max-width:420px;margin:18px auto 0">[Reveal your gift or a hint here]</div>
+</section>
+
+<section>
+  <h2>A little note</h2>
+  <div class="letter">
+    <p>Happy birthday, [Name].</p>
+    <p>[Write your own message here: something you admire about him, a memory you're grateful for, what you hope this year brings him.]</p>
+    <p>Cheers to you,<br>[Your name]</p>
+  </div>
+</section>
+
+<footer>Made with 💜 for [Name]</footer>
+
+<script>
+/* ===== EDIT HERE =====
+   Add photo file names to each "photos" list (5-10 each).
+   Empty list = shows placeholder tiles (count). */
+var GALLERIES=[
+ {title:"The people around you",sub:"Your crew, your family, your people 💜",count:8,photos:[]},
+ {title:"Meet the boss 🐱",sub:"The real star of the household",count:6,photos:[]},
+ {title:"Hobbies &amp; happy places",sub:"The stuff that lights you up",count:8,photos:[]},
+ {title:"Gym mode 💪",sub:"Consistency looks good on you",count:6,photos:[]},
+ {title:"Side quests",sub:"The best stories start with 'why not?'",count:8,photos:[]}
+];
+var host=document.getElementById("galleries");
+GALLERIES.forEach(function(g){
+ var s=document.createElement("section");
+ s.innerHTML="<h2>"+g.title+"</h2><div class='sub'>"+g.sub+"</div>";
+ var d=document.createElement("div");d.className="gal";
+ if(g.photos.length){g.photos.forEach(function(p){var i=document.createElement("img");i.src=p;i.alt="";i.loading="lazy";
+  i.onclick=function(){document.getElementById("lbi").src=p;document.getElementById("lb").style.display="flex"};d.appendChild(i)})}
+ else{for(var k=1;k<=g.count;k++){var t=document.createElement("div");t.className="t";t.textContent="Photo "+k;d.appendChild(t)}}
+ s.appendChild(d);host.appendChild(s);
+});
+
+/* Player stats: edit names and values (0-100) */
+var STATS=[["Strength 💪",85],["Cat love 🐱",100],["Adventure 🧭",90],["Humor 😂",80],["Snack power 🍜",95]];
+var st=document.getElementById("stats");
+STATS.forEach(function(s){var r=document.createElement("div");r.className="stat";r.innerHTML="<span>"+s[0]+"</span><div class='bar'><i data-w='"+s[1]+"'></i></div><span>"+s[1]+"</span>";st.appendChild(r)});
+new IntersectionObserver(function(e,o){e.forEach(function(x){if(x.isIntersecting){st.querySelectorAll("i").forEach(function(i){i.style.width=i.dataset.w+"%"});o.disconnect()}})}).observe(st);
+/* Achievements: edit freely */
+var ACH=[["🏅","Gym Streak","Showed up when it was hard"],["🐱","Best Cat Parent","[Cat's name] approves"],["🗺️","Side Quest Master","Always says yes to adventure"],["😂","Certified Funny","[Add an inside joke]"],["🤝","Loyal Friend","Always there for his people"],["🎂","Another Year Survived","Congrats!"]];
+var ah=document.getElementById("ach");
+ACH.forEach(function(a){var d=document.createElement("div");d.className="card badge";d.innerHTML="<div>"+a[0]+"</div><h3>"+a[1]+"</h3><p>"+a[2]+"</p>";ah.appendChild(d)});
+/* Balloon pop game */
+var popped=0,bl=document.querySelectorAll('.hero .b');
+bl.forEach(function(b){b.onclick=function(){if(b.dataset.p)return;b.dataset.p=1;var r=b.getBoundingClientRect();boom(r.left+r.width/2,r.top+r.height/2,40);b.style.animation='none';b.style.transform='scale(0)';b.style.opacity=0;popped++;
+ var p=document.getElementById('pop');
+ if(popped>=bl.length){p.textContent='🎉 All popped! [Add a secret message for him here]';boom()}else{p.textContent='🎈 Pop the balloons! '+popped+'/'+bl.length}}});
+/* Sparkle trail */
+var lt=0;addEventListener('pointermove',function(e){var n=Date.now();if(n-lt<40)return;lt=n;ps.push({x:e.clientX,y:e.clientY,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,s:4,c:cols[Math.floor(Math.random()*5)],l:25});run()});
+/* Scroll reveal */
+var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.1});
+document.querySelectorAll('section:not(.hero)').forEach(function(s){s.classList.add('rv');io.observe(s)});
+/* Quiz: edit questions, options, and a = index of the right answer (0 is the first option) */
+var QUIZ=[{q:"What's [Name]'s go-to order?",o:['Option A','Option B','Option C'],a:0},{q:"What's his cat's name?",o:['Option A','Option B','Option C'],a:1},{q:'Which side quest was the wildest?',o:['Option A','Option B','Option C'],a:2}];
+var qi=0,score=0,lock=false,qb=document.getElementById('quiz');
+function showQ(){
+ if(qi>=QUIZ.length){qb.innerHTML='<h3>Score: '+score+'/'+QUIZ.length+'</h3><p>'+(score==QUIZ.length?'Perfect! You know yourself too well 😎':'Not bad! Time to rewatch the videos 😆')+'</p><button class="btn" onclick="qi=0;score=0;showQ()">Play again</button>';if(score==QUIZ.length)boom();return}
+ var q=QUIZ[qi],bs=[];
+ qb.innerHTML='<p style="color:var(--peach)">Question '+(qi+1)+'/'+QUIZ.length+'</p><h3 style="margin:0 0 10px">'+q.q+'</h3>';
+ q.o.forEach(function(t,i){var b=document.createElement('button');b.className='opt';b.textContent=t;bs.push(b);
+  b.onclick=function(){if(lock)return;lock=true;if(i==q.a){score++;b.classList.add('ok');boom(innerWidth/2,innerHeight/2,30)}else{b.classList.add('no');bs[q.a].classList.add('ok')}
+   setTimeout(function(){qi++;lock=false;showQ()},1100)};qb.appendChild(b)});
+}
+showQ();
+function gift(){document.getElementById("giftbox").style.display="block";boom()}
+
+var cv=document.getElementById("c"),cx=cv.getContext("2d"),ps=[];
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener("resize",rs);
+var cols=["#7b3fc4","#a66bf0","#cfcfd8","#f8b79a","#ffffff"];
+function boom(x,y,n){x=x||innerWidth/2;y=y||innerHeight/2;for(var i=0;i<(n||140);i++)ps.push({x:x,y:y,vx:(Math.random()-.5)*14,vy:Math.random()*-14-2,s:Math.random()*7+3,c:cols[i%5],l:120});run()}
+var on=false;
+function run(){if(on)return;on=true;(function f(){cx.clearRect(0,0,cv.width,cv.height);
+ps=ps.filter(function(p){return p.l>0});
+ps.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l--;cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.s,p.s)});
+if(ps.length)requestAnimationFrame(f);else on=false})()}
+function wish(){document.getElementById("cake").textContent="🎂💨";document.getElementById("msg").textContent="Wish sent! May this year bring you everything you're hoping for. ✨";boom()}
+</script>
+</body>
+</html>
